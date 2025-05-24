@@ -8,7 +8,7 @@ import RouteOptionsPanel from '@/components/RouteOptionsPanel';
 import PreferenceSlider from '@/components/PreferenceSlider';
 import EnvironmentalLayers from '@/components/EnvironmentalLayers';
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.demo_token';
+const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.demo_token';
 
 export default function SearchPage() {
   const [viewState, setViewState] = useState({
@@ -21,6 +21,7 @@ export default function SearchPage() {
   const [destination, setDestination] = useState(null);
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [preferences, setPreferences] = useState({
     pollution: 0.4,
     shade: 0.4,
@@ -188,7 +189,12 @@ export default function SearchPage() {
             {...viewState}
             onMove={evt => setViewState(evt.viewState)}
             onClick={handleMapClick}
-            mapboxAccessToken={MAPBOX_TOKEN}
+            onLoad={() => setMapLoaded(true)}
+            onError={(error) => {
+              console.warn('Map loading error (non-critical):', error);
+              setMapLoaded(true); // Still set as loaded to show the interface
+            }}
+            mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
             mapStyle="mapbox://styles/mapbox/light-v11"
             style={{width: '100%', height: '100%'}}
           >

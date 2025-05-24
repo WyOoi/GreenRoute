@@ -119,6 +119,8 @@ GreenRoute uses Mapbox for map tiles and basic routing. For production use:
 2. **Add to environment**: Set `NEXT_PUBLIC_MAPBOX_TOKEN` in your `.env.local`
 3. **Customize styles**: Modify map styles in `src/app/search/page.js`
 
+For comprehensive API setup including air quality, weather, and enhanced routing services, see **[API_SETUP.md](API_SETUP.md)**.
+
 ### Environmental Data Sources
 The current implementation uses mock data for demonstration. For production:
 

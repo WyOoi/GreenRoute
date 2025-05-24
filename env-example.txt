@@ -7,5 +7,14 @@ NEXT_PUBLIC_MAPBOX_TOKEN=pk.your_mapbox_token_here
 # OpenWeatherMap API Key (Get from https://openweathermap.org/api)
 OPENWEATHER_API_KEY=your_openweather_key_here
 
+# Optional: Air Quality APIs (uncomment and add keys if using real data)
+# PURPLEAIR_API_KEY=your_purpleair_key_here
+# WAQI_API_KEY=your_waqi_token_here
+# EPA_AQS_API_KEY=your_epa_key_here
+
+# Optional: Additional Routing APIs (for enhanced routing)
+# GOOGLE_MAPS_API_KEY=your_google_maps_key_here
+# GRAPHHOPPER_API_KEY=your_graphhopper_key_here
+
 # For production deployments
 NEXT_PUBLIC_BASE_URL=http://localhost:3000 
