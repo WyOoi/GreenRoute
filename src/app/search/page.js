@@ -1,27 +1,20 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import Map, { NavigationControl, GeolocateControl, ScaleControl } from 'react-map-gl/mapbox';
 import { MapPin, Route, Sliders, Leaf, Shield, Thermometer, Clock } from 'lucide-react';
 import RouteInputForm from '@/components/RouteInputForm';
 import RouteOptionsPanel from '@/components/RouteOptionsPanel';
 import PreferenceSlider from '@/components/PreferenceSlider';
-import EnvironmentalLayers from '@/components/EnvironmentalLayers';
-
-const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.demo_token';
+import OpenStreetMap from '@/components/OpenStreetMap';
 
 export default function SearchPage() {
-  const [viewState, setViewState] = useState({
-    longitude: -122.4194,
-    latitude: 37.7749,
-    zoom: 12
-  });
-
+  const [mapCenter, setMapCenter] = useState([37.7749, -122.4194]);
+  const [mapZoom, setMapZoom] = useState(12);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(true); // Leaflet loads faster
   const [preferences, setPreferences] = useState({
     pollution: 0.4,
     shade: 0.4,
@@ -33,16 +26,16 @@ export default function SearchPage() {
     temperature: false
   });
 
-  const handleMapClick = useCallback((event) => {
-    const { lng, lat } = event.lngLat;
+  const handleMapClick = useCallback((latlng) => {
+    const { lat, lng } = latlng;
     
     if (!origin) {
-      setOrigin({ longitude: lng, latitude: lat });
+      setOrigin({ latitude: lat, longitude: lng });
     } else if (!destination) {
-      setDestination({ longitude: lng, latitude: lat });
+      setDestination({ latitude: lat, longitude: lng });
     } else {
       // Reset and start over
-      setOrigin({ longitude: lng, latitude: lat });
+      setOrigin({ latitude: lat, longitude: lng });
       setDestination(null);
       setRoutes([]);
     }
@@ -184,31 +177,25 @@ export default function SearchPage() {
         </div>
 
         {/* Map */}
-        <div className="flex-1 relative">
-          <Map
-            {...viewState}
-            onMove={evt => setViewState(evt.viewState)}
-            onClick={handleMapClick}
-            onLoad={() => setMapLoaded(true)}
-            onError={(error) => {
-              console.warn('Map loading error (non-critical):', error);
-              setMapLoaded(true); // Still set as loaded to show the interface
-            }}
-            mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-            mapStyle="mapbox://styles/mapbox/light-v11"
-            style={{width: '100%', height: '100%'}}
-          >
-            <NavigationControl position="top-right" />
-            <GeolocateControl position="top-right" />
-            <ScaleControl position="bottom-left" />
-            
-            <EnvironmentalLayers 
-              showLayers={showLayers}
-              routes={routes}
-              origin={origin}
-              destination={destination}
-            />
-          </Map>
+        <div className="flex-1 relative map-container">
+          {!mapLoaded && (
+            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
+                <p className="text-sm text-gray-600">Loading map...</p>
+              </div>
+            </div>
+          )}
+          
+          <OpenStreetMap
+            center={mapCenter}
+            zoom={mapZoom}
+            onMapClick={handleMapClick}
+            origin={origin}
+            destination={destination}
+            showAirQuality={showLayers.airQuality}
+            routes={routes}
+          />
 
           {/* Instructions overlay */}
           {!origin && (
