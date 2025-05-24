@@ -1,58 +1,60 @@
 # 🌱 GreenRoute - Smart Route Planner for Healthier, Greener Commutes
 
-GreenRoute is a Next.js-powered Progressive Web App (PWA) that helps urban dwellers plan walking and cycling routes that minimize pollution exposure and maximize shade coverage. By combining real-time environmental data with intelligent route optimization, GreenRoute makes every journey healthier and more comfortable.
+GreenRoute is a Next.js-powered Progressive Web App (PWA) that demonstrates intelligent route planning for urban pedestrians and cyclists. The application prioritizes environmental factors like air quality and shade coverage alongside traditional distance-based routing.
 
-![GreenRoute Screenshot](https://via.placeholder.com/800x400/10b981/ffffff?text=GreenRoute+Map+Interface)
+## ✨ Current Features
 
-## ✨ Features
+### 🗺️ Interactive Mapping
+- **OpenStreetMap Integration**: Free, open-source mapping with no API keys required
+- **Interactive Route Planning**: Click-to-set origin and destination points
+- **Custom Markers**: Visual distinction between start points, destinations, and environmental data
+- **Responsive Map Controls**: Zoom, pan, and navigate with smooth interactions
 
-### 🌬️ Real-Time Air Quality Integration
-- Live PM2.5, NO2, and O3 measurements from city sensors
-- Visual pollution heatmap overlay on interactive maps
-- Air Quality Index (AQI) calculations and health recommendations
-- Rush hour pollution pattern awareness
+### 🌬️ Environmental Data Visualization
+- **Mock Air Quality Sensors**: Displays PM2.5 values with color-coded indicators
+  - Green (0-12 μg/m³): Good air quality
+  - Yellow (13-35 μg/m³): Moderate air quality  
+  - Red (36+ μg/m³): Unhealthy air quality
+- **Tree Canopy Overlay**: Shaded areas representing potential shade coverage
+- **Interactive Data Points**: Click sensors for detailed pollution information
 
-### 🌳 Shade & Temperature Optimization
-- Tree canopy coverage analysis from satellite imagery
-- Heat index calculations with comfort scoring
-- UV exposure minimization for outdoor safety
-- Temperature-aware route recommendations
+### 🛣️ Smart Route Optimization
+- **Three Route Variants**:
+  - **Clean Air Route**: Prioritizes areas with lower pollution exposure
+  - **Shaded Route**: Maximizes tree coverage and shade
+  - **Balanced Route**: Optimal combination of environmental factors
+- **Preference Weighting**: Adjustable sliders for pollution, shade, and distance priorities
+- **Route Scoring**: Algorithmic evaluation based on environmental and distance factors
 
-### 🗺️ Smart Route Planning
-- **Clean Air Routes**: Minimize pollution exposure
-- **Shaded Routes**: Maximize tree coverage and comfort
-- **Balanced Routes**: Optimal combination of factors
-- Customizable preference weighting system
+### 🎯 User Experience Features
+- **Preference Customization**: Real-time adjustment of route priorities
+- **Route Comparison**: Side-by-side analysis of different route options
+- **Environmental Metrics**: Detailed scoring for air quality, shade, and distance
+- **Quick Presets**: One-click preference settings (Clean Air, Max Shade, Shortest)
 
-### 📱 Progressive Web App (PWA)
-- Offline route planning capabilities
-- Install as native mobile app
-- Background sync for real-time updates
-- Push notifications for air quality alerts
+### 📱 Progressive Web App
+- **Installable**: Add to home screen on mobile devices
+- **Offline-Ready**: Service worker caching for core functionality
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Fast Loading**: Optimized performance with Next.js
 
-### 🎯 Gamification & Personal Tracking
-- Green Points reward system
-- Achievement badges (Clean Air Champion, Shade Seeker, etc.)
-- Route history and personal statistics
-- CO₂ savings calculator
-
-### 🔔 Smart Notifications
-- Air quality spike alerts at departure times
-- Weather-based route recommendations
-- Personalized health and safety tips
+### 📊 User Dashboard
+- **Personal Statistics**: Track total distance, routes planned, and environmental impact
+- **Achievement System**: Gamified badges for route planning milestones
+- **Route History**: Visual history of previously planned routes
+- **Environmental Impact**: CO₂ savings and pollution avoidance metrics
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn package manager
-- Git
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/greenroute.git
+   git clone https://github.com/WyOoi/GreenRoute.git
    cd greenroute
    ```
 
@@ -61,194 +63,136 @@ GreenRoute is a Next.js-powered Progressive Web App (PWA) that helps urban dwell
    npm install
    ```
 
-3. **Set up environment variables**
-   ```bash
-   cp env-example.txt .env.local
-   ```
-   
-   Edit `.env.local` and add your API keys:
-   ```env
-   # Mapbox API Token (Get from https://account.mapbox.com/)
-   # Important: Must be prefixed with NEXT_PUBLIC_ for client-side access
-   NEXT_PUBLIC_MAPBOX_TOKEN=pk.your_mapbox_token_here
-   
-   # OpenWeatherMap API Key (Get from https://openweathermap.org/api)
-   OPENWEATHER_API_KEY=your_openweather_key_here
-   
-   # For production deployments
-   NEXT_PUBLIC_BASE_URL=http://localhost:3000
-   ```
-
-4. **Run the development server**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see GreenRoute in action!
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🏗️ Architecture
+**Note**: No API keys required for basic functionality! OpenStreetMap provides free mapping services.
 
-### Frontend (Next.js + React)
-- **Pages**: Home landing, route search, user dashboard
-- **Components**: Interactive map, route options panel, preference sliders
-- **State Management**: React Context for user preferences and route data
-- **Styling**: Tailwind CSS for responsive, modern UI
+## 🏗️ Technical Architecture
 
-### Backend (Next.js API Routes)
-- **`/api/air-quality`**: Fetches real-time pollution data
-- **`/api/weather`**: Provides weather and comfort information  
-- **`/api/route-compute`**: Core route optimization algorithm
+### Frontend Stack
+- **Next.js 15**: React framework with server-side rendering
+- **React 19**: Component-based UI development
+- **Tailwind CSS**: Utility-first styling framework
+- **React-Leaflet**: OpenStreetMap integration for React
+- **Lucide React**: Clean, customizable icons
 
-### Map & Visualization
-- **Mapbox GL JS**: Interactive maps with custom layers
-- **GeoJSON**: Environmental data visualization
-- **React Map GL**: React integration for map components
+### Backend Implementation
+- **Next.js API Routes**: Server-side logic for route computation
+- **Mock Data APIs**: Simulated environmental and weather data
+- **Route Algorithm**: Custom scoring system for multi-factor optimization
 
-### PWA Features
-- **next-pwa**: Service worker and offline capabilities
-- **Web Push**: Notifications for air quality alerts
-- **IndexedDB**: Local storage for offline route caching
+### Key Components
+```
+src/
+├── app/
+│   ├── page.js              # Landing page
+│   ├── search/page.js       # Main route planning interface
+│   ├── dashboard/page.js    # User statistics and achievements
+│   └── api/                 # Backend API endpoints
+├── components/
+│   ├── OpenStreetMap.js     # Interactive map component
+│   ├── RouteInputForm.js    # Origin/destination input
+│   ├── RouteOptionsPanel.js # Route comparison display
+│   └── PreferenceSlider.js  # Priority adjustment controls
+```
 
 ## 🔧 Configuration
 
-### Map Tiles & Routing
-GreenRoute uses Mapbox for map tiles and basic routing. For production use:
+### Environment Setup
+The application works out-of-the-box with OpenStreetMap. For enhanced features:
 
-1. **Get a Mapbox Token**: Sign up at [mapbox.com](https://mapbox.com)
-2. **Add to environment**: Set `NEXT_PUBLIC_MAPBOX_TOKEN` in your `.env.local`
-3. **Customize styles**: Modify map styles in `src/app/search/page.js`
+```bash
+# Optional: Copy environment template
+cp env-example.txt .env.local
 
-For comprehensive API setup including air quality, weather, and enhanced routing services, see **[API_SETUP.md](API_SETUP.md)**.
+# Add optional API keys for future enhancements
+OPENWEATHER_API_KEY=your_key_here  # For real weather data
+```
 
-### Environmental Data Sources
-The current implementation uses mock data for demonstration. For production:
+### Customization Options
+- **Map Center**: Modify default location in `src/app/search/page.js`
+- **Mock Data**: Update environmental data in `src/components/OpenStreetMap.js`
+- **Styling**: Customize colors and layout in Tailwind classes
+- **Route Algorithm**: Adjust scoring weights in `src/app/api/route-compute/route.js`
 
-- **Air Quality**: Integrate with local government APIs or PurpleAir
-- **Tree Canopy**: Use municipal GIS data or satellite imagery services
-- **Weather**: Connect to OpenWeatherMap or local meteorological services
+## 📊 API Endpoints
 
-## 📊 API Documentation
-
-### Route Computation API
+### Route Computation
 **POST** `/api/route-compute`
-
 ```json
 {
-  "origin": {
-    "latitude": 37.7749,
-    "longitude": -122.4194
-  },
-  "destination": {
-    "latitude": 37.7849,
-    "longitude": -122.4094
-  },
-  "weights": {
-    "pollution": 0.4,
-    "shade": 0.4,
-    "distance": 0.2
-  }
+  "origin": { "latitude": 37.7749, "longitude": -122.4194 },
+  "destination": { "latitude": 37.7849, "longitude": -122.4094 },
+  "weights": { "pollution": 0.4, "shade": 0.4, "distance": 0.2 }
 }
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "routes": [
-    {
-      "category": "low-pollution",
-      "metrics": {
-        "distance_km": 2.3,
-        "time_minutes": 28,
-        "pollution_score": 0.15,
-        "shade_score": 0.45,
-        "carbon_savings": 0.35
-      },
-      "description": "Takes you through areas with the cleanest air quality...",
-      "highlights": ["Low PM2.5 exposure", "Avoids busy roads"]
-    }
-  ],
-  "summary": {
-    "recommended_route": "low-pollution",
-    "best_air_quality_score": 85,
-    "estimated_walking_time": "28 minutes"
-  }
-}
-```
-
-### Air Quality API
+### Mock Environmental Data
 **GET** `/api/air-quality?bbox=minLon,minLat,maxLon,maxLat`
-
-Returns sensor data within the specified bounding box with AQI calculations.
-
-### Weather API  
 **GET** `/api/weather?lat=37.7749&lon=-122.4194`
 
-Provides current weather, comfort scores, and environmental impact data.
+## 🎮 How to Use
 
-## 🎮 User Experience
+### Planning a Route
+1. **Visit the Search page** (`/search`)
+2. **Click on the map** to set your starting point (green marker)
+3. **Click again** to set your destination (red marker)
+4. **Adjust preferences** using the sliders in the sidebar
+5. **Compare route options** with different environmental priorities
+6. **Select your preferred route** based on the displayed metrics
 
-### Route Planning Flow
-1. **Set Origin**: Click map or use current location
-2. **Set Destination**: Click map or search address  
-3. **Adjust Preferences**: Use sliders to prioritize air quality, shade, or distance
-4. **Compare Routes**: View 3 optimized route options with environmental scores
-5. **Select & Navigate**: Choose your preferred route and start your healthy journey
+### Understanding the Data
+- **Air Quality Markers**: Color-coded circles showing pollution levels
+- **Route Lines**: Different colors for Clean Air, Shaded, and Balanced routes
+- **Environmental Scores**: Percentage-based ratings for air quality and shade
+- **Distance & Time**: Estimated walking/cycling duration and distance
 
-### Environmental Layers
-- **Air Quality Sensors**: Color-coded circles showing PM2.5 levels
-- **Tree Canopy**: Green shaded areas indicating shade coverage
-- **Temperature Zones**: Heat warnings and comfort indicators
+## 🔮 Current Limitations & Future Potential
 
-## 🌍 Environmental Impact
+### What's Mock Data
+- **Air Quality Sensors**: Uses simulated PM2.5 values for demonstration
+- **Weather Information**: Generated environmental comfort data
+- **Tree Canopy**: Placeholder shade coverage areas
+- **Route Computation**: Algorithmic simulation rather than real traffic data
 
-GreenRoute promotes sustainable urban mobility by:
+### Production-Ready Features
+- ✅ Interactive mapping with OpenStreetMap
+- ✅ Route planning and optimization algorithms
+- ✅ User preference system and route comparison
+- ✅ Progressive Web App functionality
+- ✅ Responsive design and mobile optimization
 
-- **Reducing Pollution Exposure**: Protecting respiratory health through cleaner route choices
-- **Encouraging Active Transportation**: Making walking and cycling more appealing
-- **Raising Environmental Awareness**: Visualizing air quality and urban heat islands
-- **Supporting Green Infrastructure**: Highlighting the value of urban trees and green spaces
+### Enhancement Opportunities
+For production deployment, consider integrating:
+- Real air quality APIs (PurpleAir, EPA, local government)
+- Actual weather services (OpenWeatherMap)
+- Live traffic and routing data (GraphHopper, OSRM)
+- Real tree canopy data (municipal GIS systems)
+
+See **[API_SETUP.md](API_SETUP.md)** for detailed integration guidance.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-```bash
-# Fork the repository and clone your fork
-git clone https://github.com/your-username/greenroute.git
-
-# Create a feature branch
-git checkout -b feature/amazing-feature
-
-# Make your changes and commit
-git commit -m "Add amazing feature"
-
-# Push to your fork and create a Pull Request
-git push origin feature/amazing-feature
-```
+This project demonstrates environmental-aware route planning concepts. Contributions welcome for:
+- Real API integrations
+- Enhanced route algorithms
+- Additional environmental factors
+- UI/UX improvements
+- Performance optimizations
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Mapbox** for mapping services and routing capabilities
-- **OpenWeatherMap** for weather data APIs
-- **Urban environmental researchers** for air quality measurement methodologies
-- **Open source community** for the fantastic tools and libraries that make this possible
-
-## 📞 Support
-
-- **Documentation**: [docs.greenroute.app](https://docs.greenroute.app)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/greenroute/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/greenroute/discussions)
-- **Email**: support@greenroute.app
+MIT License - See [LICENSE](LICENSE) file for details.
 
 ---
 
-Made with 💚 for healthier cities and happier commuters.
+**Built with 💚 for healthier urban mobility**
 
-**[Try GreenRoute Live Demo →](https://greenroute.vercel.app)**
+Demo: https://greenroute.vercel.app (if deployed)
+Repository: https://github.com/WyOoi/GreenRoute.git
