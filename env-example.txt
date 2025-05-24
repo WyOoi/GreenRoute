@@ -1,0 +1,11 @@
+# Copy this file to .env.local and add your API keys
+
+# Mapbox API Token (Get from https://account.mapbox.com/)
+# Important: Must be prefixed with NEXT_PUBLIC_ for client-side access
+NEXT_PUBLIC_MAPBOX_TOKEN=pk.your_mapbox_token_here
+
+# OpenWeatherMap API Key (Get from https://openweathermap.org/api)
+OPENWEATHER_API_KEY=your_openweather_key_here
+
+# For production deployments
+NEXT_PUBLIC_BASE_URL=http://localhost:3000 
